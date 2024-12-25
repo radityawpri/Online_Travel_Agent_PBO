@@ -4,25 +4,30 @@ import com.webapp.TubesPkg.models.Transportation;
 import com.webapp.TubesPkg.service.TransportationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
+
 @Controller
 public class TransportationController {
 
+    @Autowired
+    private TransportationService transportationService;
+
     @GetMapping("/addTransportation")
-    public String showAddTransportationForm(Models model) {
+    public String showAddTransportationForm(Model models) {
        
-        model.addAttribute("transportation", new Transportation());
+        models.addAttribute("transportation", new Transportation());
         return "addTransportation"; 
     }
 
     @PostMapping("/saveTransportation")
-        public String saveTransportation(@ModelAttribute Transportation transportation){
-        TransportationController.saveTransportation(Transportation);
-    return "redirect:/index";
-        }
+    public String saveTransportation(@ModelAttribute Transportation transportation) {
+        transportationService.saveTransportation(transportation);
+        return "redirect:/index";
+    }
         
 }
