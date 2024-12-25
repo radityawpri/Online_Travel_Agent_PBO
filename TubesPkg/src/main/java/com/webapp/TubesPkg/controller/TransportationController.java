@@ -1,5 +1,6 @@
 package com.webapp.TubesPkg.controller;
 
+import com.webapp.TubesPkg.models.PackageTravel;
 import com.webapp.TubesPkg.models.Transportation;
 import com.webapp.TubesPkg.service.TransportationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +20,18 @@ public class TransportationController {
 
     @GetMapping("/addTransportation")
     public String showAddTransportationForm(Model models) {
-       
+        models.addAttribute("packageTravel", new PackageTravel());
         models.addAttribute("transportation", new Transportation());
         return "addTransportation"; 
     }
 
+  
     @PostMapping("/saveTransportation")
-    public String saveTransportation(@ModelAttribute Transportation transportation) {
-        transportationService.saveTransportation(transportation);
+    public String saveTransportation(
+        @ModelAttribute Transportation transportation,
+        @ModelAttribute PackageTravel packageTravel) {
+       
+          transportationService.saveTransportation(transportation, packageTravel);
         return "redirect:/index";
     }
         

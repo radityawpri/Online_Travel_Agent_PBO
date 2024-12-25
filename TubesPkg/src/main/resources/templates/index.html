@@ -1,49 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Travel Packages</title>
     <!-- Link CSS Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <div class="container mt-5">
-        <h1 class="text-center mb-4">Travel Packages</h1>
-            <tbody>
-                <tr th:each="transportation : ${transportations}">
-                    <td th:text="${transportation.id}"></td>
-                    <td th:text="${transportation.type}"></td>
-                    <td th:text="${transportation.provider}"></td>
-                    <td th:text="${#numbers.formatDecimal(transportation.price, 1, 2)}"></td>
-                </tr>
-                <tr th:if="${transportations != null and transportations.size() == 0}">
-                    <td colspan="4" class="text-center">No Transportation Data Available</td>
-                </tr>
-            </tbody>
-            
-            <tbody>
-                <tr th:each="accomodation : ${accomodations}">
-                    <td th:text="${accomodation.id}"></td>
-                    <td th:text="${accomodation.type}"></td>
-                    <td th:text="${accomodation.name}"></td>
-                    <td th:text="${#numbers.formatDecimal(accomodation.price, 1, 2)}"></td>
-                </tr>
-                <tr th:if="${accomodations != null and accomodations.size() == 0}">
-                    <td colspan="4" class="text-center">No Accomodation Data Available</td>
-                </tr>
-            </tbody>
-            
-        </table>
+      <h1 class="text-center mb-4">Travel Packages</h1>
+      <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+          <tr>
+            <th>ID</th>
+            <th>Destination</th>
+            <th>Facilities</th>
+            <th>Price</th>
+            <th>Transportation</th>
+            <th>Accomodation</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
 
-        <!-- Buttons -->
-        <div class="mt-4 d-flex justify-content-center gap-3">
-            <a href="/addTransportation" class="btn btn-primary ml-5">Add Transportation</a>
-            <a href="/addAccomodation" class="btn btn-secondary mr-5">Add Accomodation</a>
-        </div>
+      <!-- Buttons -->
+      <div class="mt-4 d-flex justify-content-center gap-3">
+        <a href="/addTransportation" class="btn btn-primary ml-5"
+          >Add Transportation</a
+        >
+        <a href="/addAccomodation" class="btn btn-secondary mr-5"
+          >Add Accomodation</a
+        >
+      </div>
     </div>
 
     <!-- Link JS Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+  </body>
 </html>

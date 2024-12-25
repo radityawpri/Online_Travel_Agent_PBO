@@ -24,8 +24,6 @@ public class AccomodationController {
 
     @Autowired
     private AccomodationService accomodationService;
-
-   
     // Menyimpan data accomodation
     @PostMapping("/saveAccomodation")
     public String saveAccomodation(@ModelAttribute Accomodation accomodation) {
