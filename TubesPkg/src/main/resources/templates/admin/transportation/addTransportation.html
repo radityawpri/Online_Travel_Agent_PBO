@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tambah transportations</title>
+</head>
+<body>
+
+<h1>Tambah transportation</h1>
+
+    <form th:action="@{/transportation/save}" method="post" th:object="${transportation}">
+        <label for="type">Type:</label>
+        <input type="text" th:field="*{type}" required><br>
+
+        <label for="provider">Provider:</label>
+        <input type="text" th:field="*{provider}" required><br>
+
+        <label for="price">Price:</label>
+        <input type="text" th:field="*{price}" required><br>
+
+        <button type="submit">Save</button>
+    </form>
+
+</body>
+</html>

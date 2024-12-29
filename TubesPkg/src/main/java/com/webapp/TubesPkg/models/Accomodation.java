@@ -11,11 +11,14 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Accomodation {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String type;
-    private String name;
-    private double price;
 
+    private int id;
+    private String name;
+    private String type;
+    private double price;
+    private String facility;
+    private String address;
 }

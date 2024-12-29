@@ -1,31 +1,35 @@
 package com.webapp.TubesPkg.models;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
-@Data
 @Entity
 @Getter
 @Setter
 public class PackageTravel {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long packageID;
+    private int id;
+    private String name; 
     private String destination;
-    private String facilities;
-    private double price;
-    
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "transportation_id", referencedColumnName = "id")
-    private Transportation transportation;
+    private int totalPrice;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "transportation_id", referencedColumnName = "id")
+    private Transportation Transportation;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "accomodation_id", referencedColumnName = "id")
     private Accomodation accomodation;
 
-    
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "wahana_id", referencedColumnName = "id")
+    private Wahana wahana;
 
-    
+
 }

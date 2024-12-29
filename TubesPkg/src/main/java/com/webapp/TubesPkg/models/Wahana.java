@@ -10,12 +10,11 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Transportation {
+public class Wahana {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private int id;
-    private String type;
-    private String provider;
+    private String name;
     private int price;
 }

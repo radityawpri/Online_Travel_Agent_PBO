@@ -1,31 +1,46 @@
-
 package com.webapp.TubesPkg.service;
+
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.webapp.TubesPkg.models.PackageTravel;
 import com.webapp.TubesPkg.models.Transportation;
-import com.webapp.TubesPkg.repository.PackageTravelRepository;
 import com.webapp.TubesPkg.repository.TransportationRepository;
 
 @Service
 public class TransportationService {
+    
     @Autowired
     private TransportationRepository transportationRepository;
-    @Autowired
-    private PackageTravelRepository packageTravelRepository;
-  
-    // Implementasi metode saveAccomodation
-    public void saveTransportation(Transportation transportation, PackageTravel packageTravel) {
-      // Simpan Transportation terlebih dahulu
-      Transportation savedTransportation = transportationRepository.save(transportation);
 
-      // Hubungkan Transportation ke PackageTravel
-      packageTravel.setTransportation(savedTransportation);
-
-      // Simpan PackageTravel
-      packageTravelRepository.save(packageTravel);
+    public List<Transportation> gettAllTransportation(){
+        return transportationRepository.findAll();
     }
-    
+
+    public Optional<Transportation> getTransportationById(int id){
+        return transportationRepository.findById(id);
+    }
+
+    public Transportation createTransportation(Transportation transportation){
+        return transportationRepository.save(transportation);
+    }
+
+    public Transportation updateTransportation(int id, Transportation transportation){
+        if (transportationRepository.existsById(id)){
+            transportation.setId(id);
+            return transportationRepository.save(transportation);
+        }
+        return null;
+    }
+
+    public boolean deleteTransportation(int id){
+        if(transportationRepository.existsById(id)){
+            transportationRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
 }
