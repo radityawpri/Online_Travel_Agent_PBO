@@ -6,7 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.webapp.TubesPkg.models.PackageTravel;
 import com.webapp.TubesPkg.models.Transportation;
+import com.webapp.TubesPkg.repository.PackageRepository;
 import com.webapp.TubesPkg.repository.TransportationRepository;
 
 @Service
@@ -15,7 +17,10 @@ public class TransportationService {
     @Autowired
     private TransportationRepository transportationRepository;
 
-    public List<Transportation> gettAllTransportation(){
+    @Autowired
+    private PackageRepository packageRepository;
+
+    public List<Transportation> getAllTransportation(){
         return transportationRepository.findAll();
     }
 
@@ -36,11 +41,14 @@ public class TransportationService {
     }
 
     public boolean deleteTransportation(int id){
-        if(transportationRepository.existsById(id)){
-            transportationRepository.deleteById(id);
-            return true;
+        List<PackageTravel> pcakages = packageRepository.findByTransportationId(id);
+        for (PackageTravel pkg : pcakages){
+            pkg.setTransportation(null);
+            packageRepository.save(pkg);
         }
-        return false;
+
+        transportationRepository.deleteById(id);
+        return true;
     }
 
 }

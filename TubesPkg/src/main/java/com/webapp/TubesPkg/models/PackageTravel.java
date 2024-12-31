@@ -21,7 +21,7 @@ public class PackageTravel {
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "transportation_id", referencedColumnName = "id")
-    private Transportation Transportation;
+    private Transportation transportation;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "accomodation_id", referencedColumnName = "id")

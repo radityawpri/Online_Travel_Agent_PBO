@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+
+
 
 @Controller
 @RequestMapping("/transportation")
@@ -25,9 +29,9 @@ public class TransportationController {
 
     @GetMapping
     public String getAllTransportation(Model models) {
-        List<Transportation> transportations = transportationService.gettAllTransportation();
+        List<Transportation> transportations = transportationService.getAllTransportation();
         models.addAttribute("transportation", transportations);
-        return "index";
+        return "admin/transportation/listTransportation";
     }
 
     @GetMapping("/add")
@@ -42,6 +46,28 @@ public class TransportationController {
         return "redirect:/transportation";
     }
 
+    @GetMapping("/edit/{id}")
+    public String editTransportation(@PathVariable("id") int id, Model model) {
+        Optional<Transportation> transportation = transportationService.getTransportationById(id);
+        if (transportation.isPresent()){
+            model.addAttribute("transportation", transportation.get());
+            return "admin/transportation/editTransportation";
+        }else{
+            return "redirect:/transportation?error=notFound";
+        }
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateTransportation(@PathVariable("id") int id, @ModelAttribute Transportation transportation) {
+        //TODO: process POST request
+        Transportation updateTransportation = transportationService.updateTransportation(id, transportation);
+        if (updateTransportation != null){
+            return "redirect:/transportation";
+        }else {
+            return "redirect:/error";
+        }
+    }
+
     @GetMapping("/{id}")
     public String getTransportationById(@PathVariable("id") int id, Model model) {
         Optional<Transportation> transportation = transportationService.getTransportationById(id);
@@ -52,4 +78,16 @@ public class TransportationController {
             return "redirect:/transportation?error=notfound";
         }
     }
+
+    @PostMapping("/delete/{id}")
+    public String deleteTransportation(@PathVariable("id") int id) {
+        //TODO: process POST request
+        boolean isDelete = transportationService.deleteTransportation(id);
+        if (isDelete){
+            return "redirect:/transportation";
+        }else {
+            return "redirect:/transportation?error=deleteFailed";
+        }
+    }
+    
 }

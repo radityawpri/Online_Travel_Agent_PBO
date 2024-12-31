@@ -8,13 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.webapp.TubesPkg.models.Accomodation;
+import com.webapp.TubesPkg.models.PackageTravel;
 import com.webapp.TubesPkg.repository.AccomodationRepository;
+import com.webapp.TubesPkg.repository.PackageRepository;
 
 @Service
 public class AccomodationService {
     
     @Autowired
     private AccomodationRepository accomodationRepository;
+
+    @Autowired
+    private PackageRepository packageRepository;
 
     public List<Accomodation> getAllAccomodations(){
         return accomodationRepository.findAll();
@@ -37,10 +42,13 @@ public class AccomodationService {
     }
 
     public boolean deleteAccomodation(int id){
-        if (accomodationRepository.existsById(id)){
-            accomodationRepository.deleteById(id);
-            return true;
+        List<PackageTravel> packages = packageRepository.findByAccomodationId(id);
+        for (PackageTravel pkg : packages){
+            pkg.setAccomodation(null);
+            packageRepository.save(pkg);
         }
-        return false;
+
+        accomodationRepository.deleteById(id);
+        return true;
     }
 }

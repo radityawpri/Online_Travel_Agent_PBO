@@ -6,7 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.webapp.TubesPkg.models.PackageTravel;
 import com.webapp.TubesPkg.models.Wahana;
+import com.webapp.TubesPkg.repository.PackageRepository;
 import com.webapp.TubesPkg.repository.WahanaRepository;
 
 @Service
@@ -14,6 +16,9 @@ public class WahanaService {
     
     @Autowired
     private WahanaRepository wahanaRepository;
+
+    @Autowired
+    private PackageRepository packageRepository;
 
     public List<Wahana> getAllWahana(){
         return wahanaRepository.findAll();
@@ -36,10 +41,13 @@ public class WahanaService {
     }
 
     public boolean deleteWahana(int id){
-        if(wahanaRepository.existsById(id)){
-            wahanaRepository.deleteById(id);
-            return true;
+        List<PackageTravel> packages = packageRepository.findByWahanaId(id);
+        for (PackageTravel pkg : packages){
+            pkg.setWahana(null);
+            packageRepository.save(pkg);
         }
-        return false;
+
+        wahanaRepository.deleteById(id);
+        return true;
     }
 }

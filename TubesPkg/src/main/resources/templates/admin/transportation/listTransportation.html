@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Daftar Paket Wisata</title>
+</head>
+<body>
+
+<h1>Daftar Paket Wisata</h1>
+
+<a href="/packages/new">Tambah Paket Baru</a>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Type</th>
+            <th>Provider</th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="trans : ${transportation}">
+            <td th:text="${trans.id}"></td>
+            <td th:text="${trans.type}"></td>
+            <td th:text="${trans.provider}"></td>
+            <td th:text="${trans.price}"></td>
+            <td><a th:href="@{/transportation/edit/{id}(id=${trans.id})}">Edit</a>
+                <form th:action="@{/transportation/delete/{id}(id=${trans.id})}"
+                method="post" onsubmit="return confirm('Delete this Accomdation?');">
+                <button type="submit">Delete</button>
+            </form></td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

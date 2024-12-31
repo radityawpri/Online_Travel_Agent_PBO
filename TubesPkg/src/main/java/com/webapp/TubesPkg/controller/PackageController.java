@@ -20,6 +20,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+
+
+
 
 
 
@@ -48,7 +53,7 @@ public class PackageController {
 
     @GetMapping("/add")
     public String createPackageTravel(Model models) {
-        List<Transportation> transportations = transportationService.gettAllTransportation();
+        List<Transportation> transportations = transportationService.getAllTransportation();
         List<Accomodation> accomodations = accomodationService.getAllAccomodations();
         List<Wahana> wahana = wahanaService.getAllWahana();
         models.addAttribute("packageTravel", new PackageTravel());
@@ -66,6 +71,31 @@ public class PackageController {
         return "redirect:/packagesTravel";
     }
 
+    @GetMapping("/edit/{id}")
+    public String editPackage(@PathVariable("id") int id, Model model) {
+        Optional<PackageTravel> packageTravel = packageTravelService.getPackageById(id);
+        if (packageTravel.isPresent()){
+            model.addAttribute("packagesTravel", packageTravel.get());
+            model.addAttribute("transportations", transportationService.getAllTransportation());
+            model.addAttribute("accomodation", accomodationService.getAllAccomodations());
+            model.addAttribute("wahana", wahanaService.getAllWahana());
+            return "admin/package/editPackage";
+        }else {
+            return "redirect:/packagesTravel?error=notFound";
+        }
+    }
+
+    @PostMapping("/update/{id}")
+    public String updatePackage(@PathVariable("id") int id, @ModelAttribute PackageTravel packageTravel) {
+        //TODO: process POST request
+        PackageTravel updatePackageTravel = packageTravelService.updatePackageTravel(id, packageTravel);
+        if (updatePackageTravel != null){
+            return "redirect:/packagesTravel";
+        }else {
+            return "redirect:/error";
+        }
+    }
+
     @GetMapping("/{id}")
     public String getPackageById(@PathVariable("id") int id, Model model) {
         Optional<PackageTravel> packageTravel = packageTravelService.getPackageById(id);
@@ -77,7 +107,16 @@ public class PackageController {
         }
     }
     
-    
+    @PostMapping("/delete/{id}")
+    public String deletePackages(@PathVariable("id") int id) {
+        //TODO: process POST request
+        boolean isDelete = packageTravelService.deletePackage(id);
+        if (isDelete){
+            return "redirect:/packagesTravel";
+        }else {
+            return "redirect:/packagesTravel?error=deleteFailed";
+        }
+    }
     
 
 }

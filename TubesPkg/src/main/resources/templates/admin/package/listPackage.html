@@ -18,6 +18,7 @@
             <th>Transportasi</th>
             <th>Accomodation</th>
             <th>Wahana</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -25,9 +26,14 @@
             <td th:text="${pkg.id}"></td>
             <td th:text="${pkg.name}"></td>
             <td th:text="${pkg.destination}"></td>
-            <td th:text="${pkg.transportation.type}"></td>
-            <td th:text="${pkg.accomodation.type}"></td>
-            <td th:text="${pkg.wahana.name}"></td>
+            <td th:text="${pkg.transportation?.type ?: 'null'}"></td>
+            <td th:text="${pkg.accomodation?.type ?: 'null'}"></td>
+            <td th:text="${pkg.wahana?.name ?: 'null'}"></td>
+            <td><a th:href="@{/packagesTravel/edit/{id}(id=${pkg.id})}">Edit</a>
+                <form th:action="@{/packagesTravel/delete/{id}(id=${pkg.id})}"
+                method="post" onsubmit="return confirm('Delete this Package?');">
+                    <button type="submit">Delete</button>
+            </form></td>
         </tr>
     </tbody>
 </table>

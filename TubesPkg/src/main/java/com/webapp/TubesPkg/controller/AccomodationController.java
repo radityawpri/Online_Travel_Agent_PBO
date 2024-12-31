@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 
@@ -32,7 +32,8 @@ public class AccomodationController {
     public String getAllAcomodation(Model models) {
         List<Accomodation> accomodations = accomodationService.getAllAccomodations();
         models.addAttribute("accomodations", accomodations);
-        return "index";
+        System.out.println(accomodations);
+        return "admin/accomodation/listAccomodation";
     }
     
     @GetMapping("/add")
@@ -42,10 +43,32 @@ public class AccomodationController {
     }
 
     @PostMapping("/save")
-    public String postMethodName(@ModelAttribute Accomodation accomodation) {
+    public String saveAccomodation(@ModelAttribute Accomodation accomodation) {
         //TODO: process POST request
         accomodationService.createAccomodation(accomodation);
         return "redirect:/accomodation";
+    } 
+
+    @GetMapping("/edit/{id}")
+    public String editAccomodation(@PathVariable("id") int id, Model model) {
+        Optional<Accomodation> accomodation = accomodationService.getAccomodationById(id);
+        if (accomodation.isPresent()){
+            model.addAttribute("accomodation", accomodation.get());
+            return "admin/accomodation/editAccomodation";
+        }else {
+            return "redirect:/accomodation?error=notFound";
+        }
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateAccomodation(@PathVariable("id") int id, @ModelAttribute Accomodation accomodation) {
+        //TODO: process POST request
+        Accomodation updateAccomodation = accomodationService.updateAccomodation(id, accomodation);
+        if (updateAccomodation != null){
+            return "redirect:/accomodation";
+        }else {
+            return "redirect:/error";
+        }
     }
 
     @GetMapping("/{id}")
@@ -53,11 +76,23 @@ public class AccomodationController {
         Optional<Accomodation> accomodation = accomodationService.getAccomodationById(id);
         if (accomodation.isPresent()){
             models.addAttribute("accomodation", accomodation.get());
-            return "admin/accomodation/detaiilAccomodation";
+            return "admin/accomodation/listAccomodation";
         }else {
             return "redirect:/accomodation?error=notFound";
         }
     }
+
+    @PostMapping("/delete/{id}")
+    public String deleteAccomodation(@PathVariable("id") int id) {
+        //TODO: process POST request
+        boolean isDelete = accomodationService.deleteAccomodation(id);
+        if (isDelete){
+            return "redirect:/accomodation";
+        }else {
+            return "redirect:/accomodation?error=deleteFailed";
+        }
+    }
+    
     
     
     
