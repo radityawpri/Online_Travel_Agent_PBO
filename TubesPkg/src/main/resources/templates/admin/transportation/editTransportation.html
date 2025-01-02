@@ -1,24 +1,15 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Tambah transportations</title>
-</head>
-<body>
+<form th:action="@{/transportation/update/{id}(id=${transportation.id})}" method="post" th:object="${transportation}" enctype="multipart/form-data">
+    <label for="type">Type:</label>
+    <input type="text" th:field="*{type}" required><br>
 
-<h1>Tambah transportation</h1>
+    <label for="provider">Provider:</label>
+    <input type="text" th:field="*{provider}" required><br>
 
-    <form th:action="@{/transportation/update/{id}(id=${transportation.id})}" method="post" th:object="${transportation}">
-        <label for="type">Type:</label>
-        <input type="text" th:field="*{type}" required><br>
+    <label for="price">Price:</label>
+    <input type="number" th:field="*{price}" required><br>
 
-        <label for="provider">Provider:</label>
-        <input type="text" th:field="*{provider}" required><br>
+    <label for="image">Image:</label>
+    <input type="file" name="image" accept="image/*"><br>
 
-        <label for="price">Price:</label>
-        <input type="text" th:field="*{price}" required><br>
-
-        <button type="submit">Save</button>
-    </form>
-
-</body>
-</html>
+    <button type="submit">Update</button>
+</form>

@@ -21,4 +21,5 @@ public class Accomodation {
     private double price;
     private String facility;
     private String address;
+    private String imageUrl;
 }
