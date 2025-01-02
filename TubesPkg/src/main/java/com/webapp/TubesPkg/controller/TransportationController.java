@@ -35,47 +35,22 @@ public class TransportationController {
         @Autowired
         private TransportationService transportationService;
 
-        @GetMapping
-        public String getAllTransportation(Model models) {
-            List<Transportation> transportations = transportationService.getAllTransportation();
-            models.addAttribute("transportation", transportations);
-            return "admin/transportation/listTransportation";
-        }
-    
-        @GetMapping("/add")
-        public String showAddForm(Model models) {
-            models.addAttribute("transportation", new Transportation());
-            return "admin/transportation/addTransportation";
-        }
-    
-        @PostMapping("/save")
-        public String saveTransportation(@ModelAttribute Transportation transportation, 
-                                         @RequestParam("image") MultipartFile image) {
-            // Handle image upload
-            if (!image.isEmpty()) {
-                try {
-                    // Create a unique filename based on the original file name
-                    String fileName = image.getOriginalFilename();
-                    Path filePath = Paths.get("Online_Travel_Agent_PBO/TubesPkg/src/main/resources/static/image/", fileName);
-                
-                // Ensure the directory exists
-                Files.createDirectories(filePath.getParent());
+    @GetMapping
+    public String getAllTransportation(Model models) {
+        List<Transportation> transportations = transportationService.getAllTransportation();
+        models.addAttribute("transportation", transportations);
+        return "admin/transportation/listTransportation";
+    }
 
-                // Save the image to the server
-                Files.copy(image.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+    @GetMapping("/add")
+    public String showAddForm(Model models) {
+        models.addAttribute("transportation", new Transportation());
+        return "admin/transportation/addTransportation";
+    }
 
-                // Set the image URL or file path in the transportation entity
-                transportation.setImageUrl("/image/" + fileName);
-                System.out.println("Image URL set to: " + transportation.getImageUrl());
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                return "redirect:/transportation?error=uploadFailed";
-            }
-        }
-
-        // Save transportation object to the database
-        transportationService.createTransportation(transportation); 
+    @PostMapping("/save")
+    public String saveTransportation(@ModelAttribute Transportation transportation) {
+        transportationService.createTransportation(transportation);
         return "redirect:/transportation";
     }
 
@@ -114,7 +89,6 @@ public class TransportationController {
 
     @PostMapping("/delete/{id}")
     public String deleteTransportation(@PathVariable("id") int id) {
-        //TODO: process POST request
         boolean isDelete = transportationService.deleteTransportation(id);
         if (isDelete){
             return "redirect:/transportation";
