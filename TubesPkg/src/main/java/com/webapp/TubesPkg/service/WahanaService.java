@@ -15,21 +15,21 @@ import com.webapp.TubesPkg.repository.WahanaRepository;
 public class WahanaService {
     
     @Autowired
-    private WahanaRepository wahanaRepository;
-
-    @Autowired
-    private PackageRepository packageRepository;
-
-    public List<Wahana> getAllWahana(){
-        return wahanaRepository.findAll();
-    }
-
-    public Optional<Wahana> getWahanaById(int id){
-        return wahanaRepository.findById(id);
-    }
-
-    public Wahana createWahana(Wahana wahana){
-        return wahanaRepository.save(wahana);
+    private static WahanaRepository wahanaRepository;
+    
+        @Autowired
+        private PackageRepository packageRepository;
+    
+        public List<Wahana> getAllWahana(){
+            return wahanaRepository.findAll();
+        }
+    
+        public Optional<Wahana> getWahanaById(int id){
+            return wahanaRepository.findById(id);
+        }
+    
+        public static Wahana createWahana(Wahana wahana){
+            return wahanaRepository.save(wahana);
     }
 
     public Wahana updateWahana(int id, Wahana wahana){

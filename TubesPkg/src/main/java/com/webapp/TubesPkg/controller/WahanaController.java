@@ -10,11 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.webapp.TubesPkg.models.Wahana;
 import com.webapp.TubesPkg.service.WahanaService;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 
@@ -44,7 +45,7 @@ public class WahanaController {
 
     @PostMapping("/save")
     public String saveWahana(@ModelAttribute Wahana wahana) {
-        wahanaService.createWahana(wahana);
+        WahanaService.createWahana(wahana);
         return "redirect:/wahana";
     }
 
