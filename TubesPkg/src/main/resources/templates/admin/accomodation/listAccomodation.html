@@ -1,40 +1,47 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Daftar Paket Wisata</title>
-</head>
-<body>
+  <head>
+    <title>Daftar Accomodation</title>
+  </head>
+  <body>
+    <h1>Daftar Accomodation</h1>
 
-<h1>Daftar Accomodation</h1>
-
-<table border="1">
-    <thead>
+    <table border="1">
+      <thead>
         <tr>
-            <th>ID</th>
-            <th>Name Accomodation</th>
-            <th>Type</th>
-            <th>Price</th>
-            <th>Facility</th>
-            <th>Address</th>
-            <th>Action</th>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Price</th>
+          <th>Facility</th>
+          <th>Address</th>
+          <th>Image</th>
+          <th>Actions</th>
         </tr>
-    </thead>
-    <tbody>
-        <tr th:each="acm : ${accomodations}">
-            <td th:text="${acm.id}"></td>
-            <td th:text="${acm.name}"></td>
-            <td th:text="${acm.type}"></td>
-            <td th:text="${acm.price}"></td>
-            <td th:text="${acm.facility}"></td>
-            <td th:text="${acm.address}"></td>
-            <td><a th:href="@{/accomodation/edit/{id}(id=${acm.id})}">Edit</a>
-                <form th:action="@{/accomodation/delete/{id}(id=${acm.id})}"
-                method="post" onsubmit="return confirm('Delete this Accomdation?');">
-                    <button type="submit">Delete</button>
-            </form></td>   
-        </tr>
-    </tbody>
-</table>
+      </thead>
+      <tbody>
+        <tbody>
+            <tr th:each="acm : ${accomodation}">
+                <td th:text="${acm.id}"></td>
+                <td th:text="${acm.name}"></td>
+                <td th:text="${acm.type}"></td>
+                <td th:text="${acm.price}"></td>
+                <td th:text="${acm.facility}"></td>
+                <td th:text="${acm.address}"></td>
+                <td>
+                    <img th:src="@{${acm.imageUrl}}" alt="Image" style="width: 100px; height: auto">
+                </td>
+                <td>
+                    <a th:href="@{/accomodation/edit/{id}(id=${acm.id})}">Edit</a>
+                    <form th:action="@{/accomodation/delete/{id}(id=${acm.id})}" method="post">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
-</body>
+    <!-- Tambah link -->
+    <a href="/accomodation/add">Add New Accomodation</a>
+  </body>
 </html>

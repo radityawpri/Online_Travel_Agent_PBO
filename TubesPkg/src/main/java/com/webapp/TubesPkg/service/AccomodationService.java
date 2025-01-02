@@ -21,7 +21,7 @@ public class AccomodationService {
     @Autowired
     private PackageRepository packageRepository;
 
-    public List<Accomodation> getAllAccomodations(){
+    public List<Accomodation> getAllAccomodation(){
         return accomodationRepository.findAll();
     }
 

@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 
@@ -54,7 +54,7 @@ public class PackageController {
     @GetMapping("/add")
     public String createPackageTravel(Model models) {
         List<Transportation> transportations = transportationService.getAllTransportation();
-        List<Accomodation> accomodations = accomodationService.getAllAccomodations();
+        List<Accomodation> accomodations = accomodationService.getAllAccomodation();
         List<Wahana> wahana = wahanaService.getAllWahana();
         models.addAttribute("packageTravel", new PackageTravel());
         models.addAttribute("transportations", transportations);
@@ -77,7 +77,7 @@ public class PackageController {
         if (packageTravel.isPresent()){
             model.addAttribute("packagesTravel", packageTravel.get());
             model.addAttribute("transportations", transportationService.getAllTransportation());
-            model.addAttribute("accomodation", accomodationService.getAllAccomodations());
+            model.addAttribute("accomodation", accomodationService.getAllAccomodation());
             model.addAttribute("wahana", wahanaService.getAllWahana());
             return "admin/package/editPackage";
         }else {
