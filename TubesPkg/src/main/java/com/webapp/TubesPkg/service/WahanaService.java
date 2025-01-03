@@ -13,36 +13,36 @@ import com.webapp.TubesPkg.repository.WahanaRepository;
 
 @Service
 public class WahanaService {
-    
+
     @Autowired
-    private static WahanaRepository wahanaRepository;
-    
-        @Autowired
-        private PackageRepository packageRepository;
-    
-        public List<Wahana> getAllWahana(){
-            return wahanaRepository.findAll();
-        }
-    
-        public Optional<Wahana> getWahanaById(int id){
-            return wahanaRepository.findById(id);
-        }
-    
-        public static Wahana createWahana(Wahana wahana){
-            return wahanaRepository.save(wahana);
+    private WahanaRepository wahanaRepository;
+
+    @Autowired
+    private PackageRepository packageRepository;
+
+    public List<Wahana> getAllWahana() {
+        return wahanaRepository.findAll();
     }
 
-    public Wahana updateWahana(int id, Wahana wahana){
-        if (wahanaRepository.existsById(id)){
+    public Optional<Wahana> getWahanaById(int id) {
+        return wahanaRepository.findById(id);
+    }
+
+    public Wahana createWahana(Wahana wahana) {
+        return wahanaRepository.save(wahana);
+    }
+
+    public Wahana updateWahana(int id, Wahana wahana) {
+        if (wahanaRepository.existsById(id)) {
             wahana.setId(id);
             return wahanaRepository.save(wahana);
         }
         return null;
     }
 
-    public boolean deleteWahana(int id){
+    public boolean deleteWahana(int id) {
         List<PackageTravel> packages = packageRepository.findByWahanaId(id);
-        for (PackageTravel pkg : packages){
+        for (PackageTravel pkg : packages) {
             pkg.setWahana(null);
             packageRepository.save(pkg);
         }
@@ -51,3 +51,4 @@ public class WahanaService {
         return true;
     }
 }
+

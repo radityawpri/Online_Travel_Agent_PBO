@@ -18,5 +18,7 @@ public class Transportation {
     private String type;
     private String provider;
     private int price;
+    private String date;
     private String imageUrl;
+    private String jam;
 }

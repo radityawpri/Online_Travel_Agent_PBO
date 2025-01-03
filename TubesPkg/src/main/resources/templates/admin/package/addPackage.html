@@ -1,47 +1,58 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+  <head>
     <title>Tambah Paket Wisata</title>
-</head>
-<body>
+  </head>
+  <body>
+    <h1>Tambah Paket Wisata</h1>
 
-<h1>Tambah Paket Wisata</h1>
+    <form
+      th:action="@{/packagesTravel/save}"
+      method="post"
+      th:object="${packageTravel}"
+      enctype="multipart/form-data"
+    >
+      <label for="name">Nama Paket:</label>
+      <input type="text" th:field="*{name}" required /><br />
 
-<form th:action="@{/packagesTravel/save}" method="post" th:object="${packageTravel}">
-    <label for="name">Nama Paket:</label>
-    <input type="text" th:field="*{name}" required><br>
+      <label for="destination">Destination:</label>
+      <input type="text" th:field="*{destination}" required /><br />
 
-    <label for="destination">Destination:</label>
-    <input type="text" th:field="*{destination}" required><br>
+      <label for="image">Image:</label>
+      <input type="file" name="image" accept="image/*" /><br />
 
-    <label for="transportation">Transportasi:</label>
-    <select th:field="*{transportation}" required>
-        <option th:each="trans : ${transportations}" 
-                th:value="${trans.id}" 
-                th:text="${trans.id}"></option>
-    </select><br>
+      <label for="transportation">Transportasi:</label>
+      <select th:field="*{transportation}" required>
+        <option
+          th:each="trans : ${transportations}"
+          th:value="${trans.id}"
+          th:text="${trans.id}"
+        ></option></select
+      ><br />
 
-    <label for="accomodation">Accomodation:</label>
-    <select th:field="*{accomodation}" required>
-        <option th:each="accom : ${accomodation}" 
-                th:value="${accom.id}" 
-                th:text="${accom.id}"></option>
-    </select><br>
+      <label for="accomodation">Accomodation:</label>
+      <select th:field="*{accomodation}" required>
+        <option
+          th:each="accom : ${accomodation}"
+          th:value="${accom.id}"
+          th:text="${accom.id}"
+        ></option></select
+      ><br />
 
-    <label for="wahana">Wahana:</label>
-    <select th:field="*{wahana}" required>
-        <option th:each="whn : ${wahana}" 
-                th:value="${whn.id}" 
-                th:text="${whn.id}"></option>
-    </select><br>
-    
-    <a href="/transportation/add">Tambah Transportasi</a>
-    <a href="/accomodation/add">Tambah Accomdation</a>
-    <a href="/wahana/add">Tambah wahana</a>
+      <label for="wahana">Wahana:</label>
+      <select th:field="*{wahana}" required>
+        <option
+          th:each="whn : ${wahana}"
+          th:value="${whn.id}"
+          th:text="${whn.id}"
+        ></option></select
+      ><br />
 
-    <button type="submit">Simpan Paket</button>
-</form>
+      <a href="/transportation/add">Tambah Transportasi</a>
+      <a href="/accomodation/add">Tambah Accomdation</a>
+      <a href="/wahana/add">Tambah wahana</a>
 
-
-</body>
+      <button type="submit">Simpan Paket</button>
+    </form>
+  </body>
 </html>

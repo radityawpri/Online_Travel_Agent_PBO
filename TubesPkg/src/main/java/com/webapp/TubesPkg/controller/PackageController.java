@@ -1,10 +1,17 @@
 package com.webapp.TubesPkg.controller;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.webapp.TubesPkg.models.Accomodation;
 import com.webapp.TubesPkg.models.PackageTravel;
@@ -64,12 +71,35 @@ public class PackageController {
     }
 
     @PostMapping("/save")
-    public String savePackage(@ModelAttribute PackageTravel packageTravel) {
-        //TODO: process POST request
-        packageTravelService.createPackageTravel(packageTravel);
-        
-        return "redirect:/packagesTravel";
+    public String savePackageTravel(@ModelAttribute PackageTravel packageTravel, 
+                                 @RequestParam("image") MultipartFile image) {
+    // Handle image upload
+    if (!image.isEmpty()) {
+        try {
+            // Create a unique filename based on the original file name
+            String fileName = image.getOriginalFilename();
+            Path filePath = Paths.get("Online_Travel_Agent_PBO/TubesPkg/src/main/resources/static/image/", fileName);
+
+            // Ensure the directory exists
+            Files.createDirectories(filePath.getParent());
+
+            // Save the image to the server
+            Files.copy(image.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+            // Set the image URL or file path in the PackageTravel entity
+            packageTravel.setImageUrl("/image/" + fileName);
+            System.out.println("Image URL set to: " + packageTravel.getImageUrl());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "redirect:/packageTravel?error=uploadFailed";
+        }
     }
+
+    // Save PackageTravel object to the database
+    packageTravelService.createPackageTravel(packageTravel); 
+    return "redirect:/packagesTravel";
+}
+
 
     @GetMapping("/edit/{id}")
     public String editPackage(@PathVariable("id") int id, Model model) {

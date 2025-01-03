@@ -1,36 +1,43 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Daftar Paket Wisata</title>
-</head>
-<body>
+  <head>
+    <title>Daftar Wahana</title>
+  </head>
+  <body>
+    <h1>Daftar Wahana</h1>
 
-<h1>Daftar Paket Wisata</h1>
+    <a href="/wahana/add">Tambah Wahana Baru</a>
 
-<a href="/packages/new">Tambah Paket Baru</a>
-
-<table border="1">
-    <thead>
+    <table border="1">
+      <thead>
         <tr>
-            <th>ID</th>
-            <th>name</th>
-            <th>price</th>
-            <th>Action</th>
+          <th>ID</th>
+          <th>Nama</th>
+          <th>Harga</th>
+          <th>Gambar</th>
+          <th>Aksi</th>
         </tr>
-    </thead>
-    <tbody>
-        <tr th:each="whn: ${wahana}">
-            <td th:text="${whn.id}"></td>
-            <td th:text="${whn.name}"></td>
-            <td th:text="${whn.price}"></td>
-            <td><a th:href="@{/wahana/edit/{id}(id=${whn.id})}">Edit</a>
-                <form th:action="@{/wahana/delete/{id}(id=${whn.id})}"
-                method="post" onsubmit="return confirm('Delete this Wahana?');">
-                    <button type="submit">Delete</button>
-                </form></td>
+      </thead>
+      <tbody>
+        <tr th:each="whn : ${wahana}">
+          <td th:text="${whn.id}"></td>
+          <td th:text="${whn.name}"></td>
+          <td th:text="${whn.price}"></td>
+          <td>
+            <img th:src="${whn.imageUrl}" alt="Wahana Image" width="100" />
+          </td>
+          <td>
+            <a th:href="@{/wahana/edit/{id}(id=${whn.id})}">Edit</a>
+            <form
+              th:action="@{/wahana/delete/{id}(id=${whn.id})}"
+              method="post"
+              onsubmit="return confirm('Delete this wahana?');"
+            >
+              <button type="submit">Hapus</button>
+            </form>
+          </td>
         </tr>
-    </tbody>
-</table>
-
-</body>
+      </tbody>
+    </table>
+  </body>
 </html>
