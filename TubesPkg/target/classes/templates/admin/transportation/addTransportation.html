@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Tambah Transportasi</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="mb-4 text-center">Tambah Transportasi</h1>
+
+      <form
+        th:action="@{/transportation/save}"
+        method="post"
+        th:object="${transportation}"
+        enctype="multipart/form-data"
+      >
+        <div class="form-group">
+          <label for="type">Type:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="type"
+            th:field="*{type}"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="provider">Provider:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="provider"
+            th:field="*{provider}"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="price">Price:</label>
+          <input
+            type="number"
+            class="form-control"
+            id="price"
+            th:field="*{price}"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="date" class="form-label">Date:</label>
+          <input
+            type="date"
+            class="form-control"
+            th:field="*{date}"
+            id="date"
+            required
+          />
+
+          <div class="mb-3">
+            <label for="jam" class="form-label">Time:</label>
+            <input
+              type="time"
+              class="form-control"
+              th:field="*{jam}"
+              id="jam"
+              required
+            />
+
+        <div class="form-group">
+          <label for="image">Image:</label>
+          <input
+            type="file"
+            class="form-control-file"
+            id="image"
+            name="image"
+            accept="image/*"
+          />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+      </form>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

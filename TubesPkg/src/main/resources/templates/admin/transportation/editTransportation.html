@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Tambah Transportasi</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-color: #f8f9fa;
+      }
+      .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+      }
+      .form-label {
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h2 class="text-center mb-4">Tambah Transportasi</h2>
+      <form
+        th:action="@{/transportation/save}"
+        method="post"
+        th:object="${transportation}"
+        enctype="multipart/form-data"
+        class="needs-validation"
+        novalidate
+      >
+        <!-- Hidden field for ID (if needed for edit) -->
+        <input type="hidden" th:field="*{id}" />
+
+        <div class="mb-3">
+          <label for="type" class="form-label">Type:</label>
+          <input
+            type="text"
+            class="form-control"
+            th:field="*{type}"
+            id="type"
+            placeholder="Enter transportation type"
+            required
+          />
+          <div class="invalid-feedback">Please provide a valid type.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="provider" class="form-label">Provider:</label>
+          <input
+            type="text"
+            class="form-control"
+            th:field="*{provider}"
+            id="provider"
+            placeholder="Enter provider name"
+            required
+          />
+          <div class="invalid-feedback">Please provide a valid provider.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="price" class="form-label">Price:</label>
+          <input
+            type="number"
+            class="form-control"
+            th:field="*{price}"
+            id="price"
+            placeholder="Enter price"
+            required
+          />
+          <div class="invalid-feedback">Please provide a valid price.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="date" class="form-label">Date:</label>
+          <input
+            type="date"
+            class="form-control"
+            th:field="*{date}"
+            id="date"
+            required
+          />
+          <div class="invalid-feedback">Please provide a valid date.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="jam" class="form-label">Time:</label>
+          <input
+            type="time"
+            class="form-control"
+            th:field="*{jam}"
+            id="jam"
+            required
+          />
+          <div class="invalid-feedback">Please provide a valid time.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="image" class="form-label">Image:</label>
+          <input
+            type="file"
+            class="form-control"
+            name="image"
+            accept="image/*"
+            id="image"
+          />
+          <div class="invalid-feedback">Please upload an image.</div>
+        </div>
+
+        <div class="text-center">
+          <button
+            type="submit"
+            class="btn btn-primary px-5 shadow-sm"
+            onclick="validateForm(event)"
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  
+  </body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Daftar Accomodation</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      table-striped tbody tr:nth-of-type(odd) {
+        background-color: #f2f2f2;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="text-center mb-4">Daftar Accomodation</h1>
+      <!-- Tombol Tambah -->
+      <div class="mb-3 text-end">
+        <a href="/accomodation/add" class="btn btn-primary">Add New Accomodation</a>
+
+        >
+      </div>
+      <!-- Tabel Akomodasi -->
+      <table class="table table-bordered table-striped table-hover">
+        <thead class="table-dark">
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Price</th>
+            <th>Facility</th>
+            <th>Address</th>
+            <th>Rate</th>
+            <th>Image</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="acm : ${accomodation}">
+            <td th:text="${acm.id}"></td>
+            <td th:text="${acm.name}"></td>
+            <td th:text="${acm.type}"></td>
+            <td th:text="${acm.price}"></td>
+            <td th:text="${acm.facility}"></td>
+            <td th:text="${acm.address}"></td>
+      
+          <td th:text="${acm.rate}"></td>
+          <td>
+            <img th:src="@{${acm.imageUrl}}" alt="Image" style="width: 100px; height: auto"
+            />
+          </td>
+            <td>
+              <div class="d-flex gap-2">
+                <a
+                  th:href="@{/accomodation/edit/{id}(id=${acm.id})}"
+                  class="btn btn-primary btn-sm"
+                >
+                  Edit
+                </a>
+                <form
+                  th:action="@{/accomodation/delete/{id}(id=${acm.id})}"
+                  method="post"
+                  class="d-inline"
+                >
+                  <button type="submit" class="btn btn-danger btn-sm">
+                    Delete
+                  </button>
+                </form>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Bootstrap JS (Optional, for interactivity) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
